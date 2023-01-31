@@ -18,6 +18,7 @@ def get_trading_symbols(limit):
 
     tickers = sorted(tickers, key=lambda x: x['quoteVolume'], reverse=True)
     for item in tqdm(tickers):
+        print('symbols')
         symbolpair = item['symbol']
 
         if float(item['quoteVolume']) > 50000:
@@ -41,6 +42,7 @@ def get_movers(qty, move):
     change_new = [(new_a[i], i) for i in range(len(new_a)) if new_a[i] != a[i]]
 
     for item_new in tqdm(change_new):
+        print('top_movers')
         item_new = list(item_new)
         for item_old in change_previous:
             item_old = list(item_old)
@@ -52,6 +54,7 @@ def get_movers(qty, move):
 
     top_movers_filtered = {}
     for item in tqdm(top_movers):
+        print('top_movers_filtered_sorted')
         if top_movers[item] > move:
             top_movers_filtered[item] = top_movers[item]
     top_movers_filtered_sorted = dict(sorted(top_movers_filtered.items(), key=lambda item: item[1]))
@@ -76,4 +79,4 @@ while True:
 
             if AvgPrice > price_baseline[top_mover] * 1.02:
                 print(f'Trading pair: {top_mover}, Price: {AvgPrice}, rice baseline: {price_baseline[top_mover]}, Rank: {top_movers[top_mover]}')
-                send_message('你好',f'目前{top_mover}正在噴')
+                send_message('hello:',f'{top_mover} is pump ')
