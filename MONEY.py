@@ -15,16 +15,16 @@ def get_trading_symbols(limit):
 
     for i in tqdm(range(len(tickers))):
         tickers[i]['quoteVolume'] = float(tickers[i]['quoteVolume'])
-
     tickers = sorted(tickers, key=lambda x: x['quoteVolume'], reverse=True)
     for item in tqdm(tickers):
-        print('symbols')
+        
         symbolpair = item['symbol']
 
         if float(item['quoteVolume']) > 50000:
             list.append(symbolpair)
 
     symbols = list[:limit]
+    print(f'symbols{symbols}')
     return symbols
 
 top_coins_movers = []
@@ -42,7 +42,6 @@ def get_movers(qty, move):
     change_new = [(new_a[i], i) for i in range(len(new_a)) if new_a[i] != a[i]]
 
     for item_new in tqdm(change_new):
-        print('top_movers')
         item_new = list(item_new)
         for item_old in change_previous:
             item_old = list(item_old)
@@ -54,14 +53,13 @@ def get_movers(qty, move):
 
     top_movers_filtered = {}
     for item in tqdm(top_movers):
-        print('top_movers_filtered_sorted')
         if top_movers[item] > move:
             top_movers_filtered[item] = top_movers[item]
     top_movers_filtered_sorted = dict(sorted(top_movers_filtered.items(), key=lambda item: item[1]))
 
     top_movers_filtered_sorted = dict(reversed(list(top_movers_filtered_sorted.items())))
 
-
+    print('top_movers_filtered_sorted{top_movers_filtered_sorted}')
     return top_movers_filtered_sorted
 
 price_baseline ={}
@@ -70,6 +68,7 @@ top_movers = {}
 
 while True:
     top_movers = get_movers(300, 3)
+    print(f'top_movers:{top_movers}')
     if top_movers:
         for top_mover in top_movers:
             AvgPrice = float(client.get_ticker(symbol=top_mover)['weightedAvgPrice'])
