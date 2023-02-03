@@ -11,7 +11,7 @@ client = Client(api_key, api_secret)
 
 def get_trading_symbols(limit):
     list = []
-    tickers = client.get_ticker()
+    tickers = get_ticker_at_specific_intervals(limit=1000)
 
     for i in tqdm(range(len(tickers))):
         tickers[i]['quoteVolume'] = float(tickers[i]['quoteVolume'])
@@ -20,7 +20,7 @@ def get_trading_symbols(limit):
         
         symbolpair = item['symbol']
 
-        if float(item['quoteVolume']) > 50000:
+        if float(item['quoteVolume']) > 500:
             list.append(symbolpair)
 
     symbols = list[:limit]
@@ -76,6 +76,6 @@ while True:
             if top_mover not in price_baseline:
                 price_baseline[top_mover] = AvgPrice
 
-            if AvgPrice > price_baseline[top_mover] * 1.02:
+            if AvgPrice > price_baseline[top_mover] * 1.0002:
                 print(f'Trading pair: {top_mover}, Price: {AvgPrice}, rice baseline: {price_baseline[top_mover]}, Rank: {top_movers[top_mover]}')
                 #send_message('hello:',f'{top_mover} is pump ')
