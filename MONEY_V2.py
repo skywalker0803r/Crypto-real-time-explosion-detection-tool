@@ -76,6 +76,6 @@ while True:
             if top_mover not in price_baseline:
                 price_baseline[top_mover] = AvgPrice
 
-            if AvgPrice > price_baseline[top_mover] * 1.0002:
+            if AvgPrice > price_baseline[top_mover] * 1.02:
                 print(f'Trading pair: {top_mover}, Price: {AvgPrice}, rice baseline: {price_baseline[top_mover]}, Rank: {top_movers[top_mover]}')
                 #send_message('hello:',f'{top_mover} is pump ')
